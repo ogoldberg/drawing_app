@@ -72,8 +72,42 @@ class DrawingApp
         show
     end
 
-    def fill_region
+    def fill_region(x,y,c)
+        oc = @graph[y][x]
+        @graph[y][x] = c
+        fill_algorithm(x,y,c,oc)
+        show
+    end
 
+    def fill_algorithm(x,y,c,oc)
+        #fill to the left
+        if @graph[y][x-1] == oc
+            x = x-1
+            change_color(x,y,c)
+            fill_algorithm(x,y,c,oc)
+        end
+        #fill upwards
+        if @graph[y-1][x] == oc
+            y = y-1
+            change_color(x,y,c)
+            fill_algorithm(x,y,c,oc)
+        end
+        #fill to the right
+        if @graph[y][x+1] == oc
+            x = x+1
+            change_color(x,y,c)
+            fill_algorithm(x,y,c,oc)
+        end
+        #fill downwards
+        if @graph[y+1][x] == oc
+            y = y + 1
+            change_color(x,y,c)
+            fill_algorithm(x,y,c,oc)
+        end
+    end
+
+    def change_color(x,y,c)
+        @graph[y][x] = c
     end
 
     def show
@@ -102,7 +136,7 @@ private
         when "H"
             draw_horizontal(input[1].to_i, input[2].to_i, input[3].to_i, input[4])
         when "F"
-            fill_region
+            fill_region(input[1].to_i, input[2].to_i, input[3])
         when "S"
             show
         when "X"

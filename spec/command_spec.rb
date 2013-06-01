@@ -83,4 +83,31 @@ describe DrawingApp do
             @drawing_app.graph[3][6].should_not == "G"
         end
     end
+
+    describe "fill tool" do
+        it "should fill an area based on matching the color of a specified point 
+        and being part of a chain of similar points connected to the 
+        specified point" do
+            @drawing_app.create_new_image(20,20)
+            @drawing_app.draw_horizontal(4,15,4,"G")
+            @drawing_app.draw_horizontal(4,15,14,"G")
+            @drawing_app.draw_vertical(4,4,14, "G")
+            @drawing_app.draw_vertical(15,4,14, "G")
+            @drawing_app.color_pixel(7,8,"Y")
+            @drawing_app.fill_region(10,11, "B")
+            @drawing_app.graph[4][4..13].each do |p|
+                p.should == "B"
+            end
+            @drawing_app.graph[3][4..13].each do |p|
+                p.should == "G"
+            end
+        end
+    end
+
 end
+
+
+
+
+
+
