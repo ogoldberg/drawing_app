@@ -61,4 +61,26 @@ describe DrawingApp do
             @drawing_app.graph[0][0].should_not == "R"
         end
     end
+
+    describe "draw_horizontal" do
+        it "should draw a horizontal line with x1 < x2" do
+            @drawing_app.create_new_image(8,5)
+            @drawing_app.draw_horizontal(1,6,4,"G")
+
+            @drawing_app.graph[3][0..5].each do |p|
+                p.should == "G"
+            end
+            @drawing_app.graph[3][6].should_not == "G"
+        end
+
+        it "should draw a horizontal line with x1 > x2" do
+            @drawing_app.create_new_image(8,5)
+            @drawing_app.draw_horizontal(6,3,2,"G")
+
+            @drawing_app.graph[1][2..5].each do |p|
+                p.should == "G"
+            end
+            @drawing_app.graph[3][6].should_not == "G"
+        end
+    end
 end
