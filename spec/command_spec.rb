@@ -85,14 +85,76 @@ describe DrawingApp do
     end
 
     describe "fill tool" do
-        it "should fill an area based on matching the color of a specified point 
-        and being part of a chain of similar points connected to the 
-        specified point" do
+        it "should fill a closed square" do
             @drawing_app.create_new_image(20,20)
             @drawing_app.draw_horizontal(4,15,4,"G")
             @drawing_app.draw_horizontal(4,15,14,"G")
             @drawing_app.draw_vertical(4,4,14, "G")
             @drawing_app.draw_vertical(15,4,14, "G")
+            @drawing_app.color_pixel(7,8,"Y")
+            @drawing_app.fill_region(10,11, "B")
+            @drawing_app.graph[4][4..13].each do |p|
+                p.should == "B"
+            end
+            @drawing_app.graph[3][4..13].each do |p|
+                p.should == "G"
+            end
+        end
+
+        it "should leak out of an top right open cornered square" do
+            @drawing_app.create_new_image(20,20)
+            @drawing_app.draw_horizontal(4,14,4,"G")
+            @drawing_app.draw_horizontal(4,15,14,"G")
+            @drawing_app.draw_vertical(4,4,14, "G")
+            @drawing_app.draw_vertical(15,5,14, "G")
+            @drawing_app.color_pixel(7,8,"Y")
+            @drawing_app.fill_region(10,11, "B")
+            @drawing_app.graph[4][4..13].each do |p|
+                p.should == "B"
+            end
+            @drawing_app.graph[3][4..13].each do |p|
+                p.should == "G"
+            end
+        end
+
+        it "should leak out of a top left open cornered square" do
+            @drawing_app.create_new_image(20,20)
+            @drawing_app.draw_horizontal(5,15,4,"G")
+            @drawing_app.draw_horizontal(4,15,14,"G")
+            @drawing_app.draw_vertical(4,5,14, "G")
+            @drawing_app.draw_vertical(15,5,14, "G")
+            @drawing_app.color_pixel(7,8,"Y")
+            @drawing_app.fill_region(10,11, "B")
+            @drawing_app.graph[4][4..13].each do |p|
+                p.should == "B"
+            end
+            @drawing_app.graph[3][4..13].each do |p|
+                p.should == "G"
+            end
+        end
+
+        it "should leak out of a bottom left open cornered square" do
+            @drawing_app.create_new_image(20,20)
+            @drawing_app.draw_horizontal(4,15,4,"G")
+            @drawing_app.draw_horizontal(5,15,14,"G")
+            @drawing_app.draw_vertical(4,4,13, "G")
+            @drawing_app.draw_vertical(15,5,14, "G")
+            @drawing_app.color_pixel(7,8,"Y")
+            @drawing_app.fill_region(10,11, "B")
+            @drawing_app.graph[4][4..13].each do |p|
+                p.should == "B"
+            end
+            @drawing_app.graph[3][4..13].each do |p|
+                p.should == "G"
+            end
+        end
+
+        it "should leak out of a bottom right open cornered square" do
+            @drawing_app.create_new_image(20,20)
+            @drawing_app.draw_horizontal(4,15,4,"G")
+            @drawing_app.draw_horizontal(5,14,14,"G")
+            @drawing_app.draw_vertical(4,4,14, "G")
+            @drawing_app.draw_vertical(15,5,13, "G")
             @drawing_app.color_pixel(7,8,"Y")
             @drawing_app.fill_region(10,11, "B")
             @drawing_app.graph[4][4..13].each do |p|

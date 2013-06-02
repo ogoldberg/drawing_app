@@ -86,8 +86,22 @@ class DrawingApp
             change_color(x,y,c)
             fill_algorithm(x,y,c,oc)
         end
+        #fill top left
+        if @graph[y-1][x-1] == oc
+            x = x-1
+            y = y-1
+            change_color(x,y,c)
+            fill_algorithm(x,y,c,oc)
+        end
         #fill upwards
         if @graph[y-1][x] == oc
+            y = y-1
+            change_color(x,y,c)
+            fill_algorithm(x,y,c,oc)
+        end
+        #fill top right
+        if @graph[y-1][x+1] == oc
+            x = x+1
             y = y-1
             change_color(x,y,c)
             fill_algorithm(x,y,c,oc)
@@ -98,9 +112,23 @@ class DrawingApp
             change_color(x,y,c)
             fill_algorithm(x,y,c,oc)
         end
+        #fill bottom right
+        if @graph[y+1][x+1] == oc
+            x = x+1
+            y = y+1
+            change_color(x,y,c)
+            fill_algorithm(x,y,c,oc)
+        end
         #fill downwards
         if @graph[y+1][x] == oc
             y = y + 1
+            change_color(x,y,c)
+            fill_algorithm(x,y,c,oc)
+        end
+        #fill bottom left
+        if @graph[y+1][x-1] == oc
+            x = x-1
+            y = y+1
             change_color(x,y,c)
             fill_algorithm(x,y,c,oc)
         end
