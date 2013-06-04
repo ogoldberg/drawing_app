@@ -155,8 +155,4 @@ class DrawingApp
         end
         puts "\n"
     end
-
-    def terminate_session
-
-    end
 end

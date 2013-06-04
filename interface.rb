@@ -23,7 +23,9 @@ class Interface
         @error_text = { "i m" => "**ERROR: M must be an integer greater than 0 **",
                         "i n" => "**ERROR: N must be an integer between 1 and 250 **",
                         "c"   => "**ERROR: C can only be a single letter from A-Z. All letters will be capitalized automatically **"}
-        @prompt_text = {1 => "What would you like to do next ( press M or the enter key for help)?" }
+        @prompt_text = {1 => "What would you like to do next ( press M or the enter key for help)?",
+                        2 => "Here's your new graph!",
+                        3 => "Graph cleared. What's next?"}
         help
     end
 
@@ -70,7 +72,7 @@ class Interface
             if validate_m(input[1])
                 if validate_n(input[2])
                     @drawing_app.create_new_image(input[1].to_i, input[2].to_i)
-                    puts "Here's your new graph!"
+                    puts @prompt_text[2]
                     help
                 else
                     puts @error_text["i n"]
@@ -82,7 +84,7 @@ class Interface
             end
         when "C"
             @drawing_app.clear_table
-            puts "Graph cleared. What's next?"
+            puts @prompt_text[3]
             get_input
         when "L"
             if validate_x(input[1])
