@@ -9,9 +9,9 @@ describe DrawingApp do
 
     describe "command interpreter" do 
         it "should instantiate with 5 columns and 8 rows" do
-            @drawing_app.input("I 8 5")
-            @drawing_app.columns.should == 8
-            @drawing_app.rows.should == 5
+            @drawing_app.create_new_image(8,5)
+            # @drawing_app.columns.should == 8
+            # @drawing_app.rows.should == 5
         end
     end
 
