@@ -2,15 +2,48 @@ class DrawingApp
     attr_reader :columns
     attr_reader :rows
     attr_reader :graph
+    
 
     def initialize
+        @help_text = {"i" => "I M N. Create a new M x N image with all pixels colored white (O).\n",
+        
+        
+        "c" => "C. Clears the table, setting all pixels to white (O).\n",
+        "l" => "L X Y C. Colors the pixel (X,Y) with color C.\n    Example: L 5 4 X\n",
+        "v" => "V X Y1 Y2 C. Draw a vertical segment of color C in column X between rows Y1 and Y2 (inclusive).\n     Example: V 3 2 8",
+        "h" => "H X1 X2 Y C. Draw a horizontal segment of color C in row Y between columns X1 and X2 (inclusive).\n",
+        "f" => "F X Y C. Fill the region R with the color C. R is defined as: Pixel (X,Y) belongs to R. 
+        Any other pixel which is the same color as (X,Y) and shares a common side with any pixel in R also belongsto this region.\n",
+        "s" => "S. Show the contents of the current image\n",
+        "x" => "X. Terminate the session\n"}
 
+        @example_text = {"i example" =>  "Example: entering I 9 9 makes a 9x9 grid.\n"}
+
+        @error_text = {"i m error" => "M must be an integer greater than 0",
+                       "i n error" => "N must be an integer between 1 and 250"}
+        help
     end
 
-    def interface
-        print "Input text: "
-        input = gets.strip.upcase
-        take_action
+    def help
+        @help = @help_text.each {|k,v| puts v}
+        interface
+    end
+
+
+    def interface        
+        input = gets.strip
+        process_input(input)
+    end
+
+    def process_input(input)
+        input_array = input.split(' ')
+        puts input_array[0].upcase.inspect
+        if ['I', 'C', 'L', 'V', 'H', 'F', 'S', 'X'].include? input_array[0].upcase        
+            take_action(input_array)
+        elsif
+            help
+        end
+        
     end
 
     def create_new_image(columns, rows)
@@ -22,11 +55,7 @@ class DrawingApp
            columns.times { r << "O"}
         end
         show
-   end
-
-    def input(command)
-        input_array = command.split(' ')
-        take_action(input_array)
+        help
     end
 
     def clear_table
@@ -152,9 +181,27 @@ class DrawingApp
 private
 
     def take_action(input)
+        input[0] = input[0].upcase
         case input[0]
         when "I"
-            create_new_image(input[1].to_i, input[2].to_i)
+            if input[1].to_i > 0
+                if (1..250).include?(input[2].to_i)
+                    create_new_image(input[1].to_i, input[2].to_i)
+                else
+                    puts @error_text["i n error"]
+                    puts @example_text["i example"]
+                    interface
+                end
+            elsif input[1].to_i <= 0 && !(1..250).include?(input[2].to_i)
+                puts @error_text["i n error"]
+                puts @error_text["i m error"]
+                puts @example_text["i example"]
+                interface
+            else
+                puts @error_text["i m error"]
+                puts @example_text["i example"]
+                interface
+            end
         when "C"
             clear_table
         when "L"
@@ -168,7 +215,11 @@ private
         when "S"
             show
         when "X"
-            terminate_session
+            puts "Thanks for using this graphing program!"
+            exit
         end
     end
 end
+
+d = DrawingApp.new
+d.interface
