@@ -5,6 +5,8 @@ class DrawingApp
 
     def create_new_image(columns, rows)
         @graph = Array.new
+        @columns = columns
+        @rows = rows
         rows.times {@graph.push << []}
         @graph.each do |r|
            columns.times { r << "O"}
@@ -69,10 +71,10 @@ class DrawingApp
         row = @graph[y]
         if x1 <= x2
             line_length = x2 - x1 + 1
-            row[x1..x2] = ["G"] * line_length
+            row[x1..x2] = [c] * line_length
         else
             line_length = x1 - x2 + 1
-            row[x2..x1] = ["G"] * line_length
+            row[x2..x1] = [c] * line_length
         end
         show
     end

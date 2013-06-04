@@ -8,7 +8,7 @@ class Interface
                         "c" => "Enter C to clear the table, setting all pixels to white (O).\n",
                         "l" => "Enter L X Y C to color the pixel (X,Y) with color C.\n",
                         "v" => "Enter V X Y1 Y2 C to draw a vertical segment of color C in column X between rows Y1 and Y2 (inclusive).\n",
-                        "h" => "Enter X1 X2 Y C to draw a horizontal segment of color C in row Y between columns X1 and X2 (inclusive).\n",
+                        "h" => "Enter H X1 X2 Y C to draw a horizontal segment of color C in row Y between columns X1 and X2 (inclusive).\n",
                         "f" => "Enter F X Y C to fill a region of one color with a new color by selecting a pixel in the region and a new color.\n",
                         "s" => "Enter S to to show the contents of the current image\n",
                         "m" => "Enter M at any time to return to this menu",
@@ -18,13 +18,12 @@ class Interface
                             "l" => "Example: L 5 4 A colors a pixel at coordinates 5,4 with the 'color' A\n",
                             "v" => "Example: V 3 2 8 B draws a vertical line of 'color' B on column three, from row 2 to row 8\n",
                             "h" => "Example: H 2 8 3 B draws a horizontal line of 'color' B from column 2 to column 8 on row 3\n",
-                            "f" => "Example: F 2 3 J will change color of the pixel at 2,3 to the 'color' J, 
-                                and any connected pixels of the same color. It is a fill tool."}
+                            "f" => "Example: F 2 3 J will change color of the pixel at 2,3 to the 'color' J and any connected pixels of the same color. It is a fill tool."}
 
-        @error_text = { "i m" => "M must be an integer greater than 0",
-                        "i n" => "N must be an integer between 1 and 250",
-                        "x" => "X must be an integer greater than 0",
-                        "y" => "Y must be an integer greater than 0"}
+        @error_text = { "i m" => "**ERROR: M must be an integer greater than 0 **",
+                        "i n" => "**ERROR: N must be an integer between 1 and 250 **",
+                        "c"   => "**ERROR: C can only be a single letter from A-Z. All letters will be capitalized automatically **"}
+        @prompt_text = {1 => "What would you like to do next ( press M or the enter key for help)?" }
         help
     end
 
@@ -40,22 +39,22 @@ class Interface
     end
 
 
-    def get_input        
+    def get_input     
         input = gets.strip
         process_input(input)
     end
 
     def process_input(input)
-        input_array = input.split(' ')
+        input = input.split(' ')
         if @drawing_app.graph
             options = ['I', 'C', 'L', 'V', 'H', 'F', 'S', 'M', 'X']
         else
             options = ['I', 'X']
         end
 
-        if input_array[0].kind_of? String
-            if options.include? input_array[0].upcase   
-                take_action(input_array)
+        if input[0].kind_of? String
+            if options.include? input[0].upcase
+                take_action(input)
             else
                 help
             end
@@ -68,53 +67,118 @@ class Interface
         input[0] = input[0].upcase
         case input[0]
         when "I"
-            if validate_x(input[1])
-                if validate_y(input[2])
+            if validate_m(input[1])
+                if validate_n(input[2])
                     @drawing_app.create_new_image(input[1].to_i, input[2].to_i)
+                    puts "Here's your new graph!"
                     help
                 else
                     puts @error_text["i n"]
-                    puts @example_text["i"]
                     get_input
                 end
-            elsif !validate_x(input[1]) && !validate_y(input[2])
-                puts @error_text["i n"]
-                puts @error_text["i m"]
-                puts @example_text["i"]
-                get_input
             else
                 puts @error_text["i m"]
-                puts @example_text["i"]
                 get_input
             end
         when "C"
             @drawing_app.clear_table
             puts "Graph cleared. What's next?"
-            help
-        when "L"            
+            get_input
+        when "L"
             if validate_x(input[1])
-                if validate_y(input[2])
-                    @drawing_app.color_pixel(input[1].to_i, input[2].to_i, input[3])
+                if validate_y(input[2])          
+                    if validate_c(input[3])
+                        @drawing_app.color_pixel(input[1].to_i, input[2].to_i, input[3].upcase)
+                        puts @prompt_text[1]
+                        get_input
+                    else
+                        puts @error_text["c"]
+                        puts @example_text["l"]
+                        get_input
+                    end
                 else
-                    puts @example_text["l"]
+                    y_error
                     get_input
                 end
             else
-                puts @example_text["l"]
-                get_input    
-            end        
+                x_error
+                get_input
+            end
         when "V"
-                @drawing_app.draw_vertical(input[1].to_i, input[2].to_i, input[3].to_i, input[4])
-                help
+            if validate_x(input[1])
+                if validate_y(input[2])
+                    if validate_y(input[3])
+                        if validate_c(input[4])
+                            @drawing_app.draw_vertical(input[1].to_i, input[2].to_i, input[3].to_i, input[4])
+                            puts @prompt_text[1]
+                            get_input
+                        else
+                            puts @error_text["c"]
+                            puts @example_text["v"]
+                            get_input
+                        end
+                    else
+                    y_error
+                    get_input
+                    end
+                else
+                    y_error
+                    get_input
+                end
+            else
+                x_error
+                get_input
+            end
+
         when "H"
-                @drawing_app.draw_horizontal(input[1].to_i, input[2].to_i, input[3].to_i, input[4])
-                help
+            if validate_x(input[1])
+                if validate_x(input[2])
+                    if validate_y(input[3])
+                        if validate_c(input[4])
+                            @drawing_app.draw_horizontal(input[1].to_i, input[2].to_i, input[3].to_i, input[4])
+                            puts @prompt_text[1]
+                            get_input
+                        else
+                            puts @error_text["c"]
+                            puts @example_text["h"]
+                            get_input
+                        end
+                    else
+                        y_error
+                        get_input
+                    end
+                else
+                    x_error
+                    get_input
+                end
+            else
+                x_error
+                get_input
+            end
         when "F"
-                @drawing_app.fill_region(input[1].to_i, input[2].to_i, input[3])
-                help
+            if validate_x(input[1])
+                if validate_y(input[2])          
+                    if validate_c(input[3])
+                        @drawing_app.fill_region(input[1].to_i, input[2].to_i, input[3])
+                        puts @prompt_text[1]
+                        get_input
+                    else
+                        puts @error_text["c"]
+                        puts @example_text["f"]
+                        get_input
+                    end
+                else
+                    y_error
+                    get_input
+                end
+            else
+                x_error
+                get_input
+            end
         when "S"
                 @drawing_app.show
-                help
+                puts @prompt_text[1]
+                get_input
         when "M"
             help
         when "X"
@@ -125,12 +189,34 @@ class Interface
 
     private
 
+    def validate_m(m)
+        m.to_i > 0
+    end
+
+    def validate_n(n)
+        n.to_i > 0
+    end
+
     def validate_x(x)
-        x.to_i > 0
+        x = x.to_i
+        validate_m(x) and x <= @drawing_app.columns
     end
 
     def validate_y(y)
-        y.to_i > 0
+        y = y.to_i
+        validate_n(y) and y <= @drawing_app.rows    
+    end
+
+    def validate_c(c)
+        (("A".."Z").include? c) or (("a".."z").include? c)
+    end
+
+    def x_error
+        puts "**ERROR: X must be an integer between 0 and #{@drawing_app.columns.inspect} **\n Please try again"
+    end
+
+    def y_error
+        puts "**ERROR Y must be an integer between 0 and #{@drawing_app.rows.inspect} **\n Please try again"
     end
 end
 
