@@ -27,24 +27,6 @@ class DrawingApp
     # L: COLOR A PIXEL #
     ####################
 
-    def set_pixel_column
-        puts "Which column is the pixel in? 1-#{@graph[0].count.to_s}"
-        x = gets.strip.to_i
-        validate_pixel_column(x)
-    end
-
-    def set_pixel_row(x)
-        puts "Which row is the pixel in? 1-#{@graph.count.to_s}"
-        y = gets.strip.to_i
-        validate_pixel_row(x,y)
-    end
-
-    def set_pixel_color(x,y)
-        puts "What color should the pixel be? This can be any letter. Your letter will be automatically capitalized:"
-        c = gets.strip.upcase
-        validate_pixel_color(x,y,c)
-    end
-
     def color_pixel(x,y,c)
         x = x - 1
         y = y - 1
@@ -76,9 +58,9 @@ class DrawingApp
         show
     end
 
-    #########################
+    ###########################
     # DRAW HORIZONTAL SEGMENT #
-    #########################
+    ###########################
 
     def draw_horizontal(x1,x2,y,c)
         x1 = x1 - 1
