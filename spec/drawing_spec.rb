@@ -114,20 +114,20 @@ describe DrawingApp do
         end
     end
 
-    describe "rectangle tool" do
+    describe "picture_frame tool" do
         it "should draw a rectangle" do
             @drawing_app.create_new_image(4,4)
-            @drawing_app.create_rectangle(1,1,3,3,"F")
+            @drawing_app.picture_frame(1,1,3,3,"F")
             expected_graph = [["F", "F", "F", "O"], ["F", "O", "F", "O"],["F", "F", "F", "O"],["O", "O", "O", "O"]]
             @drawing_app.graph.should == expected_graph
         end
     end
 
-    describe "diagonal tool" do
-        it "should draw a 45 degree line between two points" do
+    describe "rectangle tool" do
+        it "should draw a filled rectangle" do
             @drawing_app.create_new_image(4,4)
-            @drawing_app.diagonal(3,0,"F")
-            expected_graph = [["F", "O", "O", "O"], ["O", "F", "O", "O"],["O", "O", "F", "O"],["O", "O", "O", "O"]]
+            @drawing_app.rectangle(3,1,1,3,"F")
+            expected_graph = [["F", "F", "F", "O"], ["F", "F", "F", "O"],["F", "F", "F", "O"],["O", "O", "O", "O"]]
         end
     end
 end

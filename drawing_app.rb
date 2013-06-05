@@ -104,10 +104,10 @@ class DrawingApp
     end
 
     #########################
-    #       RECTANGLE       #
+    #     PICTURE FRAME     #
     #########################
 
-    def create_rectangle(x1,y1,x2,y2,c)
+    def picture_frame(x1,y1,x2,y2,c)
         draw_horizontal(x1,x2,y1,c)
         draw_horizontal(x1,x2,y2,c)
         draw_vertical(x1,y1,y2,c)
@@ -115,17 +115,27 @@ class DrawingApp
     end
 
     #########################
-    #       DIAGONAL       #
+    #    FILLED RECTANGLE   #
     #########################
-    def diagonal(y1,y2,c)
-        y1 = y1 - 1
-        y2 = y2 - 1
+    def rectangle(x1,y1,x2,y2,c)x2 = x2 - 1
         c = c.upcase
-        if y1 < y2
-            (y1..y2).collect{|i|@graph[i][i] = c}
-        else
-            (y2..y1).collect{|i|@graph[i][i] = c}
+        if x1 < x2
+            low_x = x1 - 1
+            high_x = x2 - 1
+        else 
+            low_x = x2 -1
+            high_x = x1 - 1            
         end
+        if y1 < y2
+            low_y = y1 - 1
+            high_y = y2 - 1
+        else 
+            high_y = y1 - 1
+            low_y = y1 - 1
+        end
+        (low_x..high_x).each do |x|
+            (low_y..high_y).collect{|y|@graph[y][x] = c}
+        end            
     end
 
     #########################
@@ -134,7 +144,7 @@ class DrawingApp
 
     def show
         @graph.each do |r|
-            puts r.map { |p| p }.join(" ")
+            puts r.map { |p| p }.join("")
         end
         puts "\n"
     end

@@ -9,7 +9,8 @@ class Interface
                             "l" => "Enter L X Y C to color the pixel (X,Y) with color C.\n",
                             "v" => "Enter V X Y1 Y2 C to draw a vertical segment of color C in column X between rows Y1 and Y2 (inclusive).\n",
                             "h" => "Enter H X1 X2 Y C to draw a horizontal segment of color C in row Y between columns X1 and X2 (inclusive).\n",
-                            "r" => "Enter R X1 Y2 X2 Y2 C to draw a rectangle of color c with one corner at X1,Y1, and the opposite corner at X2,Y2\n",
+                            "p" => "Enter P X1 Y2 X2 Y2 C to draw a picture frame of color c with one corner at X1,Y1, and the opposite corner at X2,Y2\n",
+                            "r" => "Enter R X1 Y2 X2 Y2 C to draw a filled rectangle of color c with one corner at X1,Y1, and the opposite corner at X2,Y2\n",
                             "f" => "Enter F X Y C to fill a region of one color with a new color by selecting a pixel in the region and a new color.\n",
                             "s" => "Enter S to to show the contents of the current image\n",
                             "m" => "Enter M at any time to return to this menu",
@@ -21,7 +22,8 @@ class Interface
                             "v" => "Example: V 3 2 8 B draws a vertical line of 'color' B on column three, from row 2 to row 8\n",
                             "h" => "Example: H 2 8 3 B draws a horizontal line of 'color' B from column 2 to column 8 on row 3\n",
                             "f" => "Example: F 2 3 J will change color of the pixel at 2,3 to the 'color' J and any connected pixels of the same color. It is a fill tool.",
-                            "r" => "Example: R 1 1 3 3 F will create a rectangle with color F and corners at 1,1 and 3,3"
+                            "p" => "Example: P 1 1 3 3 F will create a picture frame with color F and corners at 1,1 and 3,3",
+                            "r" => "Example: R 1 1 3 3 F will create a filled rectangle with color F and corners at 1,1 and 3,3"
                         }
 
         @error_text =   {   "i m" => "**ERROR: M must be an integer greater than 0 **",
@@ -58,7 +60,7 @@ class Interface
     def process_input(input)
         input = input.split(' ')
         if @drawing_app.graph
-            options = ['I', 'C', 'L', 'V', 'H', 'F', 'R', 'D', 'S', 'M', 'X']
+            options = ['I', 'C', 'L', 'V', 'H', 'F', 'R', 'P', 'S', 'M', 'X']
         else
             options = ['I', 'X']
         end
@@ -197,13 +199,44 @@ class Interface
                 @drawing_app.show
                 puts @prompt_text[1]
                 get_input
-        when "R"
+        when "P"
             if validate_x(input[1])
                 if validate_y(input[2])          
                     if validate_x(input[3])
                         if validate_y(input[4])
                             if validate_c(input[5])
-                                @drawing_app.create_rectangle(input[1].to_i, input[2].to_i, input[3].to_i, input[4].to_i, input[5])
+                                @drawing_app.picture_frame(input[1].to_i, input[2].to_i, input[3].to_i, input[4].to_i, input[5])
+                                @drawing_app.show
+                                puts @prompt_text[1]
+                                get_input
+                            else
+                                puts @error_text["c"]
+                                puts @example_text["p"]
+                                get_input
+                            end
+                        else
+                            y_error
+                            get_input
+                        end
+                    else
+                        x_error
+                        get_input
+                    end
+                else
+                    y_error
+                    get_input
+                end
+            else
+                x_error
+                get_input
+            end
+        when "R"
+            if validate_x(input[1])
+                if validate_y(input[2])
+                    if validate_x(input[3])
+                        if validate_y(input[4])
+                            if validate_c(input[5])
+                                @drawing_app.rectangle(input[1].to_i, input[2].to_i, input[3].to_i, input[4].to_i, input[5].upcase)
                                 @drawing_app.show
                                 puts @prompt_text[1]
                                 get_input
@@ -226,27 +259,6 @@ class Interface
                 end
             else
                 x_error
-                get_input
-            end
-        when "D"
-            if validate_y(input[1])
-                if validate_y(input[2])
-                    if validate_c(input[3])
-                        @drawing_app.diagonal(input[1].to_i, input[2].to_i, input[3])
-                        @drawing_app.show
-                        puts @prompt_text[1]
-                        get_input
-                    else
-                        puts @error_text["c"]
-                        puts @example_text["r"]
-                        get_input
-                    end
-                else
-                    y_error
-                    get_input
-                end
-            else
-                y_error
                 get_input
             end
         when "M"
