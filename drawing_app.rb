@@ -59,7 +59,6 @@ class DrawingApp
         rows.each do |p|
             p[x] = c
         end
-        show
     end
 
     ###########################
@@ -79,7 +78,6 @@ class DrawingApp
             line_length = x1 - x2 + 1
             row[x2..x1] = [c] * line_length
         end
-        show
     end
 
     #########################
@@ -108,6 +106,18 @@ class DrawingApp
                 end
             end
         end
+    end
+
+    #########################
+    #       RECTANGLE       #
+    #########################
+
+    def create_rectangle(x1,y1,x2,y2,c)
+        draw_horizontal(x1,x2,y1,c)
+        draw_horizontal(x1,x2,y2,c)
+        draw_vertical(x1,y1,y2,c)
+        draw_vertical(x2,y1,y2,c)
+        show
     end
 
     #########################

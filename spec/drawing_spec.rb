@@ -114,6 +114,14 @@ describe DrawingApp do
         end
     end
 
+    describe "rectangle tool" do
+        it "should draw a rectangle" do
+            @drawing_app.create_new_image(4,4)
+            @drawing_app.create_rectangle(1,1,3,3,"F")
+            expected_graph = [["F", "F", "F", "O"], ["F", "O", "F", "O"],["F", "F", "F", "O"],["O", "O", "O", "O"]]
+            @drawing_app.graph.should == expected_graph
+        end
+    end
 end
 
 
