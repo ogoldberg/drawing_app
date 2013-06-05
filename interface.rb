@@ -12,7 +12,7 @@ class Interface
                             "p" => "Enter P X1 Y2 X2 Y2 C to draw a picture frame of color c with one corner at X1,Y1, and the opposite corner at X2,Y2\n",
                             "r" => "Enter R X1 Y2 X2 Y2 C to draw a filled rectangle of color c with one corner at X1,Y1, and the opposite corner at X2,Y2\n",
                             "f" => "Enter F X Y C to fill a region of one color with a new color by selecting a pixel in the region and a new color.\n",
-                            "d" => "Enter D Y1 Y2 C to draw any segment of the diagonal from top left to bottom right with color C"
+                            "d" => "Enter D Y1 Y2 C to draw any segment of the diagonal from top left to bottom right with color C",
                             "s" => "Enter S to to show the contents of the current image\n",
                             "m" => "Enter M at any time to return to this menu",
                             "x" => "Type X to terminate the session\n" 
@@ -24,7 +24,8 @@ class Interface
                             "h" => "Example: H 2 8 3 B draws a horizontal line of 'color' B from column 2 to column 8 on row 3\n",
                             "f" => "Example: F 2 3 J will change color of the pixel at 2,3 to the 'color' J and any connected pixels of the same color. It is a fill tool.",
                             "p" => "Example: P 1 1 3 3 F will create a picture frame with color F and corners at 1,1 and 3,3",
-                            "r" => "Example: R 1 1 3 3 F will create a filled rectangle with color F and corners at 1,1 and 3,3"
+                            "r" => "Example: R 1 1 3 3 F will create a filled rectangle with color F and corners at 1,1 and 3,3",
+                            "d" => "Example: D 1 6 W will draw a W colored diagonal line starting from the top left corner, that extends for 6 rows."
                         }
 
         @error_text =   {   "i m" => "**ERROR: M must be an integer greater than 0 **",
@@ -323,5 +324,4 @@ class Interface
         puts "**ERROR Y must be an integer between 0 and #{@drawing_app.rows.inspect} **\n Please try again"
     end
 end
-
 @interface = Interface.new

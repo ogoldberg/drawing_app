@@ -1,3 +1,5 @@
+require_relative './colorize'
+
 class DrawingApp
     attr_reader :columns
     attr_reader :rows
@@ -159,8 +161,25 @@ class DrawingApp
 
     def show
         @graph.each do |r|
-            puts r.map { |p| p }.join("")
+            puts r.map { |p| p.red}.join("")
         end
         puts "\n"
     end
+
+    def color_chooser(p)
+        case p
+        when "R"
+            red
+        when "G"
+            green
+        when "Y"
+            yellow
+        when "P"
+            pink
+        when "O"
+            white
+        end
+    end
+
+
 end
