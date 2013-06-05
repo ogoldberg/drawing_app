@@ -139,6 +139,21 @@ class DrawingApp
     end
 
     #########################
+    #       DIAGONAL       #
+    #########################
+    def diagonal(y1,y2,c)
+        y1 = y1 - 1
+        y2 = y2 - 1
+        c = c.upcase
+        if y1 < y2
+            (y1..y2).collect{|i|@graph[i][i] = c}
+        else
+            (y2..y1).collect{|i|@graph[i][i] = c}
+        end
+    end
+
+
+    #########################
     #         SHOW          #
     #########################
 

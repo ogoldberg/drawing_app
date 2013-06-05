@@ -3,7 +3,7 @@ class Interface
     def initialize
         @drawing_app = DrawingApp.new
         @help_text =    {   "g" => "These are your current options\n HINTS: whenever it says M,N,X,Y,X1,Y2,X2, or Y2 replace them with integers.\nReplace C with any letter.):",
-                            "d" => "----------------------------------------------------",
+                            "a" => "----------------------------------------------------",
                             "i" => "Enter I M N to create a new M x N image with all pixels colored white (O).\n",        
                             "c" => "Enter C to clear the table, setting all pixels to white (O).\n",
                             "l" => "Enter L X Y C to color the pixel (X,Y) with color C.\n",
@@ -12,6 +12,7 @@ class Interface
                             "p" => "Enter P X1 Y2 X2 Y2 C to draw a picture frame of color c with one corner at X1,Y1, and the opposite corner at X2,Y2\n",
                             "r" => "Enter R X1 Y2 X2 Y2 C to draw a filled rectangle of color c with one corner at X1,Y1, and the opposite corner at X2,Y2\n",
                             "f" => "Enter F X Y C to fill a region of one color with a new color by selecting a pixel in the region and a new color.\n",
+                            "d" => "Enter D Y1 Y2 C to draw any segment of the diagonal from top left to bottom right with color C"
                             "s" => "Enter S to to show the contents of the current image\n",
                             "m" => "Enter M at any time to return to this menu",
                             "x" => "Type X to terminate the session\n" 
@@ -53,14 +54,14 @@ class Interface
     def get_input     
         input = gets.strip
         puts "\n"
-        puts @help_text["d"]
+        puts @help_text["a"]
         process_input(input)
     end
 
     def process_input(input)
         input = input.split(' ')
         if @drawing_app.graph
-            options = ['I', 'C', 'L', 'V', 'H', 'F', 'R', 'P', 'S', 'M', 'X']
+            options = ['I', 'C', 'L', 'V', 'H', 'F', 'R', 'D', 'P', 'S', 'M', 'X']
         else
             options = ['I', 'X']
         end
@@ -259,6 +260,27 @@ class Interface
                 end
             else
                 x_error
+                get_input
+            end
+        when "D"
+            if validate_y(input[1])
+                if validate_y(input[2])
+                    if validate_c(input[3])
+                        @drawing_app.diagonal(input[1].to_i, input[2].to_i, input[3])
+                        @drawing_app.show
+                        puts @prompt_text[1]
+                        get_input
+                    else
+                        puts @error_text["c"]
+                        puts @example_text["r"]
+                        get_input
+                    end
+                else
+                    y_error
+                    get_input
+                end
+            else
+                y_error
                 get_input
             end
         when "M"
