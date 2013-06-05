@@ -11,7 +11,6 @@ class DrawingApp
         @graph.each do |r|
            columns.times { r << "O"}
         end
-        show
     end
 
     ##################
@@ -22,7 +21,6 @@ class DrawingApp
         @graph.each do |r|
             r.collect! { |p| p = "O"}
         end
-        show
     end
 
     ####################
@@ -34,7 +32,6 @@ class DrawingApp
         y = y - 1
         c = c.upcase
         change_color(x,y,c)
-        show
     end
 
     def change_color(x,y,c)
@@ -92,7 +89,6 @@ class DrawingApp
         puts oc.inspect
         @graph[y][x] = c
         fill_algorithm(x,y,c,oc)
-        show
     end
 
     def fill_algorithm(x,y,c,oc)
@@ -117,7 +113,6 @@ class DrawingApp
         draw_horizontal(x1,x2,y2,c)
         draw_vertical(x1,y1,y2,c)
         draw_vertical(x2,y1,y2,c)
-        show
     end
 
     #########################

@@ -2,7 +2,7 @@ require_relative './drawing_app'
 class Interface
     def initialize
         @drawing_app = DrawingApp.new
-        @help_text =    {   "g" => "These are your current options\n (HINT: whenever it says M,N,X,Y,X1, or X2, replace them with integers. Replace C with any letter.):",
+        @help_text =    {   "g" => "These are your current options\n HINTS: whenever it says M,N,X,Y,X1,Y2,X2, or Y2 replace them with integers.\nReplace C with any letter.):",
                             "d" => "----------------------------------------------------",
                             "i" => "Enter I M N to create a new M x N image with all pixels colored white (O).\n",        
                             "c" => "Enter C to clear the table, setting all pixels to white (O).\n",
@@ -51,6 +51,7 @@ class Interface
     def get_input     
         input = gets.strip
         puts "\n"
+        puts @help_text["d"]
         process_input(input)
     end
 
@@ -80,6 +81,7 @@ class Interface
             if validate_m(input[1])
                 if validate_n(input[2])
                     @drawing_app.create_new_image(input[1].to_i, input[2].to_i)
+                    @drawing_app.show
                     puts @prompt_text[2]
                     help
                 else
@@ -92,6 +94,7 @@ class Interface
             end
         when "C"
             @drawing_app.clear_table
+            @drawing_app.show
             puts @prompt_text[3]
             puts @prompt_text[1]
             get_input
@@ -100,6 +103,7 @@ class Interface
                 if validate_y(input[2])          
                     if validate_c(input[3])
                         @drawing_app.color_pixel(input[1].to_i, input[2].to_i, input[3])
+                        @drawing_app.show
                         puts @prompt_text[1]
                         get_input
                     else
@@ -121,6 +125,7 @@ class Interface
                     if validate_y(input[3])
                         if validate_c(input[4])
                             @drawing_app.draw_vertical(input[1].to_i, input[2].to_i, input[3].to_i, input[4])
+                            @drawing_app.show
                             puts @prompt_text[1]
                             get_input
                         else
@@ -147,6 +152,7 @@ class Interface
                     if validate_y(input[3])
                         if validate_c(input[4])
                             @drawing_app.draw_horizontal(input[1].to_i, input[2].to_i, input[3].to_i, input[4])
+                            @drawing_app.show
                             puts @prompt_text[1]
                             get_input
                         else
@@ -171,6 +177,7 @@ class Interface
                 if validate_y(input[2])          
                     if validate_c(input[3])
                         @drawing_app.fill_region(input[1].to_i, input[2].to_i, input[3])
+                        @drawing_app.show
                         puts @prompt_text[1]
                         get_input
                     else
@@ -197,6 +204,7 @@ class Interface
                         if validate_y(input[4])
                             if validate_c(input[5])
                                 @drawing_app.create_rectangle(input[1].to_i, input[2].to_i, input[3].to_i, input[4].to_i, input[5])
+                                @drawing_app.show
                                 puts @prompt_text[1]
                                 get_input
                             else
