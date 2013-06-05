@@ -32,6 +32,7 @@ class DrawingApp
     def color_pixel(x,y,c)
         x = x - 1
         y = y - 1
+        c = c.upcase
         change_color(x,y,c)
         show
     end
@@ -69,6 +70,7 @@ class DrawingApp
         x1 = x1 - 1
         x2 = x2 - 1
         y  = y  - 1
+        c = c.upcase
         row = @graph[y]
         if x1 <= x2
             line_length = x2 - x1 + 1
@@ -87,6 +89,7 @@ class DrawingApp
     def fill_region(x,y,c)
         x = x - 1
         y = y - 1
+        c = c.upcase
         oc = @graph[y][x]
         puts oc.inspect
         @graph[y][x] = c

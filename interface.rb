@@ -111,7 +111,7 @@ class Interface
                 if validate_y(input[2])
                     if validate_y(input[3])
                         if validate_c(input[4])
-                            @drawing_app.draw_vertical(input[1].to_i, input[2].to_i, input[3].to_i, input[4])
+                            @drawing_app.draw_vertical(input[1].to_i, input[2].to_i, input[3].to_i, input[4].upcase)
                             puts @prompt_text[1]
                             get_input
                         else
@@ -137,7 +137,7 @@ class Interface
                 if validate_x(input[2])
                     if validate_y(input[3])
                         if validate_c(input[4])
-                            @drawing_app.draw_horizontal(input[1].to_i, input[2].to_i, input[3].to_i, input[4])
+                            @drawing_app.draw_horizontal(input[1].to_i, input[2].to_i, input[3].to_i, input[4].upcase)
                             puts @prompt_text[1]
                             get_input
                         else
