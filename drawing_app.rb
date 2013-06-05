@@ -49,6 +49,7 @@ class DrawingApp
         x  = x  - 1
         y1 = y1 - 1
         y2 = y2 - 1
+        c = c.upcase
         if y1 <= y2
             rows = @graph[y1..y2]
         else
@@ -84,64 +85,25 @@ class DrawingApp
     #########################
 
     def fill_region(x,y,c)
+        x = x - 1
+        y = y - 1
         oc = @graph[y][x]
+        puts oc.inspect
         @graph[y][x] = c
         fill_algorithm(x,y,c,oc)
         show
     end
 
     def fill_algorithm(x,y,c,oc)
-        #fill to the left
-        if @graph[y][x-1] == oc
-            x = x-1
-            change_color(x,y,c)
-            fill_algorithm(x,y,c,oc)
-        end
-        #fill top left
-        if @graph[y-1][x-1] == oc
-            x = x-1
-            y = y-1
-            change_color(x,y,c)
-            fill_algorithm(x,y,c,oc)
-        end
-        #fill upwards
-        if @graph[y-1][x] == oc
-            y = y-1
-            change_color(x,y,c)
-            fill_algorithm(x,y,c,oc)
-        end
-        #fill top right
-        if @graph[y-1][x+1] == oc
-            x = x+1
-            y = y-1
-            change_color(x,y,c)
-            fill_algorithm(x,y,c,oc)
-        end
-        #fill to the right
-        if @graph[y][x+1] == oc
-            x = x+1
-            change_color(x,y,c)
-            fill_algorithm(x,y,c,oc)
-        end
-        #fill bottom right
-        if @graph[y+1][x+1] == oc
-            x = x+1
-            y = y+1
-            change_color(x,y,c)
-            fill_algorithm(x,y,c,oc)
-        end
-        #fill downwards
-        if @graph[y+1][x] == oc
-            y = y + 1
-            change_color(x,y,c)
-            fill_algorithm(x,y,c,oc)
-        end
-        #fill bottom left
-        if @graph[y+1][x-1] == oc
-            x = x-1
-            y = y+1
-            change_color(x,y,c)
-            fill_algorithm(x,y,c,oc)
+        (x-1..x+1).each do |newX|
+            (y-1..y+1).each do |newY|
+                if @graph[newY]
+                    if @graph[newY][newX] == oc
+                        change_color(newX,newY,c)
+                        fill_algorithm(newX, newY, c, oc)
+                    end
+                end
+            end
         end
     end
 

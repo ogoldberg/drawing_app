@@ -164,6 +164,18 @@ describe DrawingApp do
                 p.should == "G"
             end
         end
+
+        it "should legitimately fill a closed square" do
+            @drawing_app.create_new_image(3,3)
+            expected_graph = [["C", "C", "C"], ["C", "B", "C"],["C", "B", "C"]]
+            @drawing_app.graph[0] = ["C", "C", "C"]
+            @drawing_app.graph[1] = ["C", "A", "C"]
+            @drawing_app.graph[2] = ["C", "A", "C"]
+            puts @drawing_app.graph.inspect
+            @drawing_app.fill_region(2, 2, "B")
+            @drawing_app.graph.should == expected_graph
+        end
+
     end
 
 end

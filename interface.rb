@@ -161,7 +161,7 @@ class Interface
             if validate_x(input[1])
                 if validate_y(input[2])          
                     if validate_c(input[3])
-                        @drawing_app.fill_region(input[1].to_i, input[2].to_i, input[3])
+                        @drawing_app.fill_region(input[1].to_i, input[2].to_i, input[3].upcase)
                         puts @prompt_text[1]
                         get_input
                     else
