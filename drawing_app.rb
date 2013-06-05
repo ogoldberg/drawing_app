@@ -86,7 +86,6 @@ class DrawingApp
         y = y - 1
         c = c.upcase
         oc = @graph[y][x]
-        puts oc.inspect
         @graph[y][x] = c
         fill_algorithm(x,y,c,oc)
     end
@@ -113,6 +112,20 @@ class DrawingApp
         draw_horizontal(x1,x2,y2,c)
         draw_vertical(x1,y1,y2,c)
         draw_vertical(x2,y1,y2,c)
+    end
+
+    #########################
+    #       DIAGONAL       #
+    #########################
+    def diagonal(y1,y2,c)
+        y1 = y1 - 1
+        y2 = y2 - 1
+        c = c.upcase
+        if y1 < y2
+            (y1..y2).collect{|i|@graph[i][i] = c}
+        else
+            (y2..y1).collect{|i|@graph[i][i] = c}
+        end
     end
 
     #########################

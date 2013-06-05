@@ -122,6 +122,14 @@ describe DrawingApp do
             @drawing_app.graph.should == expected_graph
         end
     end
+
+    describe "diagonal tool" do
+        it "should draw a 45 degree line between two points" do
+            @drawing_app.create_new_image(4,4)
+            @drawing_app.diagonal(3,0,"F")
+            expected_graph = [["F", "O", "O", "O"], ["O", "F", "O", "O"],["O", "O", "F", "O"],["O", "O", "O", "O"]]
+        end
+    end
 end
 
 

@@ -58,7 +58,7 @@ class Interface
     def process_input(input)
         input = input.split(' ')
         if @drawing_app.graph
-            options = ['I', 'C', 'L', 'V', 'H', 'F', 'R', 'S', 'M', 'X']
+            options = ['I', 'C', 'L', 'V', 'H', 'F', 'R', 'D', 'S', 'M', 'X']
         else
             options = ['I', 'X']
         end
@@ -226,6 +226,27 @@ class Interface
                 end
             else
                 x_error
+                get_input
+            end
+        when "D"
+            if validate_y(input[1])
+                if validate_y(input[2])
+                    if validate_c(input[3])
+                        @drawing_app.diagonal(input[1].to_i, input[2].to_i, input[3])
+                        @drawing_app.show
+                        puts @prompt_text[1]
+                        get_input
+                    else
+                        puts @error_text["c"]
+                        puts @example_text["r"]
+                        get_input
+                    end
+                else
+                    y_error
+                    get_input
+                end
+            else
+                y_error
                 get_input
             end
         when "M"
