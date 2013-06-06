@@ -128,6 +128,7 @@ describe DrawingApp do
             @drawing_app.create_new_image(4,4)
             @drawing_app.rectangle(2,0,0,2,"F")
             expected_graph = [["F", "F", "F", "O"], ["F", "F", "F", "O"],["F", "F", "F", "O"],["O", "O", "O", "O"]]
+            @drawing_app.graph.should == expected_graph
         end
     end
 end
