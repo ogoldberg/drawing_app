@@ -8,6 +8,8 @@ class String
         case p
         when "B"
             blue
+        when "K"
+            black
         when "C"
             cyan
         when "G"
@@ -20,6 +22,22 @@ class String
             red      
         when "Y"
             yellow
+        when "b"
+            l_blue
+        when "k"
+            l_black
+        when "c"
+            l_cyan
+        when "g"
+            l_green
+        when "m"
+            l_magenta
+        when "o"
+            l_white
+        when "r"
+            l_red      
+        when "y"
+            l_yellow
         end
     end
 
@@ -55,6 +73,38 @@ class String
 
     def yellow
         colorize(43)
+    end  
+
+    def l_blue
+        colorize(34)
+    end
+
+    def l_black
+        colorize(30)
+    end
+
+    def l_cyan
+        colorize(36)
+    end
+
+    def l_green
+        colorize(32)
+    end
+
+    def l_magenta
+        colorize(35)
+    end
+
+    def l_white
+        colorize(37)
+    end
+
+    def l_red
+        colorize(31)
+    end    
+
+    def l_yellow
+        colorize(33)
     end  
 
 end
