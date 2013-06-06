@@ -100,7 +100,6 @@ class DrawingApp
     #    FILLED RECTANGLE   #
     #########################
     def rectangle(x1,y1,x2,y2,c)
-        c = c.upcase
         if x1 < x2
             low_x = x1
             high_x = x2
@@ -118,16 +117,5 @@ class DrawingApp
         (low_x..high_x).each do |x|
             (low_y..high_y).collect{|y|@graph[y][x] = c}
         end            
-    end
-
-    #########################
-    #       DIAGONAL       #
-    #########################
-    def diagonal(y1,y2,c)
-        if y1 < y2
-            (y1..y2).collect{|i|@graph[i][i] = c}
-        else
-            (y2..y1).collect{|i|@graph[i][i] = c}
-        end
     end
 end
