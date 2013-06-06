@@ -1,5 +1,3 @@
-require_relative './colorize'
-
 class DrawingApp
     attr_reader :columns
     attr_reader :rows
@@ -30,13 +28,6 @@ class DrawingApp
     ####################
 
     def color_pixel(x,y,c)
-        x = x - 1
-        y = y - 1
-        c = c.upcase
-        change_color(x,y,c)
-    end
-
-    def change_color(x,y,c)
         @graph[y][x] = c
     end
 
@@ -46,10 +37,6 @@ class DrawingApp
     #########################
 
     def draw_vertical(x,y1,y2,c)
-        x  = x  - 1
-        y1 = y1 - 1
-        y2 = y2 - 1
-        c = c.upcase
         if y1 <= y2
             rows = @graph[y1..y2]
         else
@@ -65,10 +52,6 @@ class DrawingApp
     ###########################
 
     def draw_horizontal(x1,x2,y,c)
-        x1 = x1 - 1
-        x2 = x2 - 1
-        y  = y  - 1
-        c = c.upcase
         row = @graph[y]
         if x1 <= x2
             line_length = x2 - x1 + 1
@@ -84,9 +67,6 @@ class DrawingApp
     #########################
 
     def fill_region(x,y,c)
-        x = x - 1
-        y = y - 1
-        c = c.upcase
         oc = @graph[y][x]
         @graph[y][x] = c
         fill_algorithm(x,y,c,oc)
@@ -97,7 +77,7 @@ class DrawingApp
             (y-1..y+1).each do |newY|
                 if @graph[newY]
                     if @graph[newY][newX] == oc
-                        change_color(newX,newY,c)
+                        color_pixel(newX,newY,c)
                         fill_algorithm(newX, newY, c, oc)
                     end
                 end
@@ -119,21 +99,21 @@ class DrawingApp
     #########################
     #    FILLED RECTANGLE   #
     #########################
-    def rectangle(x1,y1,x2,y2,c)x2 = x2 - 1
+    def rectangle(x1,y1,x2,y2,c)
         c = c.upcase
         if x1 < x2
-            low_x = x1 - 1
-            high_x = x2 - 1
+            low_x = x1
+            high_x = x2
         else 
-            low_x = x2 -1
-            high_x = x1 - 1            
+            low_x = x2
+            high_x = x1           
         end
         if y1 < y2
-            low_y = y1 - 1
-            high_y = y2 - 1
+            low_y = y1
+            high_y = y2
         else 
-            high_y = y1 - 1
-            low_y = y1 - 1
+            high_y = y1
+            low_y = y1
         end
         (low_x..high_x).each do |x|
             (low_y..high_y).collect{|y|@graph[y][x] = c}
@@ -144,42 +124,10 @@ class DrawingApp
     #       DIAGONAL       #
     #########################
     def diagonal(y1,y2,c)
-        y1 = y1 - 1
-        y2 = y2 - 1
-        c = c.upcase
         if y1 < y2
             (y1..y2).collect{|i|@graph[i][i] = c}
         else
             (y2..y1).collect{|i|@graph[i][i] = c}
         end
     end
-
-
-    #########################
-    #         SHOW          #
-    #########################
-
-    def show
-        @graph.each do |r|
-            puts r.map { |p| p.red}.join("")
-        end
-        puts "\n"
-    end
-
-    def color_chooser(p)
-        case p
-        when "R"
-            red
-        when "G"
-            green
-        when "Y"
-            yellow
-        when "P"
-            pink
-        when "O"
-            white
-        end
-    end
-
-
 end
