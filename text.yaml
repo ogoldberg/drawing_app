@@ -1,6 +1,6 @@
 help_text:
-    G: "These are your current options\nHINTS:\nWhenever it says M,N,X,Y,X1,Y2,X2, or Y2 replace them with integers.\nReplace C with any of these letters: \nB = Blue\nK = Black\nC = Cyan\nG = Green\nM = Magenta\nO = White\nR = Red\nY = Yellow.):"
-    A: "----------------------------------------------------"
+    G: "These are your current options\nHINTS:\nWhenever it says M,N,X,Y,X1,Y2,X2, or Y2 replace them with integers.\nReplace C with any of these letters: \nB = Blue\nK = Black\nC = Cyan\nG = Green\nM = Magenta\nO = White\nR = Red\nY = Yellow"
+    A: "-------------------ALL LETTERS MUST BE CAPITALIZED----------------------------------"
     I: "Enter I M N to create a new M x N image with all pixels colored white (O).\n"
     C: "Enter C to clear the table, setting all pixels to white (O).\n"
     L: "Enter L X Y C to color the pixel (X,Y) with color C.\n"
