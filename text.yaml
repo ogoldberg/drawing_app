@@ -1,5 +1,5 @@
 help_text:
-    g: "These are your current options\n HINTS: whenever it says M,N,X,Y,X1,Y2,X2, or Y2 replace them with integers.\nReplace C with any letter.):"
+    g: "These are your current options\nHINTS:\nWhenever it says M,N,X,Y,X1,Y2,X2, or Y2 replace them with integers.\nReplace C with any of these letters: B, K, C, G, M, O, R, Y.):"
     a: "----------------------------------------------------"
     i: "Enter I M N to create a new M x N image with all pixels colored white (O).\n"
     c: "Enter C to clear the table, setting all pixels to white (O).\n"
@@ -12,7 +12,7 @@ help_text:
     d: "Enter D Y1 Y2 C to draw any segment of the diagonal from top left to bottom right with color C"
     s: "Enter S to to show the contents of the current image\n"
     m: "Press the enter key at any time to return to this menu\n"
-    x: "Type X to terminate the session\n" 
+    x: "Type X to terminate the session\n"
 example_text:
     i: "Example: entering I 9 9 makes a 9x9 grid.\n"
     l: "Example: L 5 4 A colors a pixel at coordinates 5,4 with the 'color' A\n"
@@ -25,8 +25,9 @@ example_text:
 error_text:
     m: "**ERROR: An integer greater than 0 must be submitted for value M **"
     n: "**ERROR: An integer between 1 and 250 must be submitted for value N **"
-    c: "**ERROR: One of the following letters must be submitted for value C: B, C, G, M, O, R, Y **"
+    c: "**ERROR: One of the following letters must be submitted for value C: B, K, C, G, M, O, R, Y **"
 prompt_text:
     1: "What would you like to do next (press the enter key for help)?"
     2: "Here's your new graph!"
     3: "Graph cleared."
+    4: "Let's get started!"

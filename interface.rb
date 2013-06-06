@@ -34,19 +34,11 @@ class Interface
         if @drawing_app.graph
             @options = ['I', 'C', 'L', 'V', 'H', 'F', 'R', 'D', 'P', 'S', 'M', 'X']
             if valid_action?(input)
-                if input[0] == "I"
-                    new_graph_sequence(input)
-                else
-                    existing_graph_sequence(input)
-                end
+                input[0] == "I" ? new_graph_sequence(input) : existing_graph_sequence(input)
             end            
         else
             @options = ['I', 'X']
-            if valid_action?(input)
-                new_graph_sequence(input)
-            else 
-                help
-            end
+            valid_action?(input) ? new_graph_sequence(input) : help
         end
     end
 
@@ -79,11 +71,7 @@ class Interface
     def existing_graph_sequence(input)
         if (input[0] != "S") && (input[0] != "C")
             input[1] = input[1].to_i
-            if input[0] == "D"
-                y_valid?(input[1])
-            else
-                x_valid?(input[1])
-            end
+            input[0] == "D" ? y_valid?(input[1]) : x_valid?(input[1])
             input[1] = input[1] - 1
             inconsistent_array_element_valid?(input)
         end
@@ -122,7 +110,7 @@ class Interface
 
     def c_valid?(c)
         begin
-            if ["B", "C", "G", "M", "O", "R", "Y"].include? c.upcase
+            if ["B", "K", "C", "G", "M", "O", "R", "Y"].include? c.upcase
             else
                 puts @t["error_text"]["c"]
                 get_input
@@ -136,10 +124,7 @@ class Interface
     def y_valid?(y)
         n_valid?(y)
         begin
-            if y <= @drawing_app.rows
-            else
-                y_error
-            end
+            y <= @drawing_app.rows ? true : y_error
         rescue
             x_error
         end
@@ -148,10 +133,7 @@ class Interface
     def x_valid?(x)
         m_valid?(x)
         begin
-            if x.to_i <= @drawing_app.columns
-            else
-                x_error
-            end
+            x <= @drawing_app.columns ? true : x_error
         rescue
             x_error
         end
@@ -165,10 +147,7 @@ class Interface
                 get_input
             end
         else
-            if m.to_i > 0
-            else
-                x_error
-            end
+            m.to_i > 0 ? true : x_error
         end
     end
 
@@ -180,17 +159,21 @@ class Interface
                 get_input
             end
         else
-            if (n.to_i > 0) && (n.to_i < 250)
-            else
-                y_error
-            end
+            (n.to_i > 0) && (n.to_i < 250) ? true : y_error
         end
     end
 
     def show
         @drawing_app.graph.each do |r|
             puts r.map { |p| p}.join("")
-            #puts r.map { |p| ".".color_chooser(p)}.join("")
+        end
+        puts "\n"
+        @drawing_app.graph.each do |r|
+            puts r.map { |p| p.downcase.color_chooser(p)}.join("")
+        end
+        puts "\n"
+        @drawing_app.graph.each do |r|
+            puts r.map { |p| "\ ".color_chooser(p)}.join("")
         end
         get_input
         puts "\n"
@@ -199,7 +182,7 @@ class Interface
     def take_action(input)
         case input[0]
         when "I"
-            @drawing_app.create_new_image(input[1],input[2])     
+            @drawing_app.create_new_image(input[1],input[2])
         when "C"
             @drawing_app.clear_table
         when "L"            
